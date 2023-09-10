@@ -1,0 +1,14 @@
+{
+  "name": "optimal-theme",
+  "description": "A >1kB JS library to setup theme configuration that is synced between css/systemPreference & js/localStorage.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "tslib": "^2.6.2"
+  }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Theme CSS Configuration should be inlined in head element, but external works too. -->
+    <style>
+      :root {
+        /* Page background color variables. */
+        --app-background-light: #ffffff;
+        --app-background-dark: #000000;
+
+        /* Page text color variables. */
+        --app-textcolor-light: #000000;
+        --app-textcolor-dark: #ffffff;
+
+        /* Default to dark mode. */
+        --app-background: var(--app-background-dark);
+        --app-textcolor: var(--app-textcolor-dark);
+
+        /* Set the default variables based on system preference. */
+        @media (prefers-color-scheme: light) {
+          --app-background: var(--app-background-light);
+          --app-textcolor: var(--app-textcolor-light);
+        }
+      }
+      /* Apply the styles on the body element. */
+      body {
+        background-color: var(--app-background);
+        color: var(--app-textcolor);
+      }
+    </style>
+    <!-- 
+      Theme JS should be inlined in head element, but external works too.
+      `defer`, `async`, and end-of-body script will cause FUOC if local storage themeMode 
+      is set to `dark` or `light` and system-preference is the opposite of local storage.
+    -->
+    <script>
+      // prettier-ignore
+      var setupTheme=function(){"use strict";return(()=>{let n=!1;return(g,M,T)=>{const m=T??"theme-mode",h=M??"dark";let o=!1;try{localStorage.setItem("a","a"),localStorage.removeItem("a"),o=!0}catch{o=!1}const c="matchMedia"in window,l=c&&typeof window.matchMedia("(prefers-color-scheme: light)").matches=="boolean",i=()=>{if(o){const e=localStorage.getItem(m)??"";if(["light","dark","system"].includes(e))return e}return null},d=()=>c&&l?window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark":null,a=()=>{const e=d(),t=i();return t&&t!=="system"?t:e||h},s=(e,t)=>{t&&o&&localStorage.setItem(m,e);const r=e==="system"?d()??h:e,E=document.documentElement;g.forEach(u=>{E.style.setProperty(`--${u}`,`var(--${u}-${r})`)})},f=()=>{s(a()==="light"?"dark":"light",!0)},p=()=>{s("system",!0)};return s(a()),c&&l&&!n&&(window.matchMedia("(prefers-color-scheme: light)").addEventListener("change",t=>{const r=i();(!r||r==="system")&&s(t.matches?"light":"dark")}),n=!0),{getThemeMode:a,setThemeMode:s,toggleThemeMode:f,useSystemThemeMode:p}}})()}();
+
+      // Setup the initial theme mode.
+      const {
+        getThemeMode,
+        setThemeMode,
+        toggleThemeMode,
+        useSystemThemeMode,
+      } = setupTheme(["app-background", "app-textcolor"]);
+
+      // Attach the variables on the window or wherever.
+      window.getThemeMode = getThemeMode;
+      window.setThemeMode = setThemeMode;
+      window.toggleThemeMode = toggleThemeMode;
+      window.useSystemThemeMode = useSystemThemeMode;
+    </script>
+  </head>
+  <body>
+    <header>
+      <button onclick="toggleThemeMode()">Toggle Theme Mode</button>
+      <button onclick="useSystemThemeMode()">Use System's Theme Mode</button>
+    </header>
+    <main>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Neque ornare aenean
+        euismod elementum nisi quis eleifend quam adipiscing. Pharetra convallis
+        posuere morbi leo urna molestie at. Luctus accumsan tortor posuere ac
+        ut. Sit amet luctus venenatis lectus magna fringilla. Vel eros donec ac
+        odio tempor orci. Eget nunc scelerisque viverra mauris in aliquam sem.
+        At risus viverra adipiscing at. Euismod lacinia at quis risus sed
+        vulputate odio ut enim. Enim lobortis scelerisque fermentum dui faucibus
+        in ornare. Eget mauris pharetra et ultrices neque. Varius morbi enim
+        nunc faucibus a pellentesque.
+      </p>
+    </main>
+  </body>
+</html>
